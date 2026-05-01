@@ -1,81 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>DevOps App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 300px;
-        }
-
-        input {
-            padding: 10px;
-            width: 80%;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background-color: #4facfe;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #007bff;
-        }
-
-        #result {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+    <title>My App</title>
 </head>
 <body>
 
-<div class="container">
-    <h2>DevOps self App</h2>
-    <input type="text" id="name" placeholder="Enter your name" />
-    <br>
-    <button onclick="sendData()">Submit</button>
-    <div id="result"></div>
-</div>
+    <h1>Hello Asad 🚀</h1>
 
-<script>
-    async function sendData() {
-        const name = document.getElementById("name").value;
+    <form id="form">
+        <input type="text" id="name" placeholder="Enter name">
+        <button type="submit">Send</button>
+    </form>
 
-        const response = await fetch("http://127.0.0.1:5000/process", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name: name })
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            let name = document.getElementById("name").value;
+
+            let res = await fetch("/process", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name: name })
+            });
+
+            let data = await res.json();
+            document.getElementById("result").innerText = data.result || data.error;
         });
-
-        const data = await response.json();
-        document.getElementById("result").innerText = data.result || data.error;
-    }
-</script>
+    </script>
 
 </body>
 </html>
