@@ -1,14 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from utils import process_data
 
 app = Flask(__name__)
 
 
+# 👉 HTML page route
 @app.route("/")
 def home():
-    return jsonify({"message": "API is running"})
+    return render_template("index.html")
 
 
+# 👉 API route (same as before)
 @app.route("/process", methods=["POST"])
 def process():
     data = request.get_json()
